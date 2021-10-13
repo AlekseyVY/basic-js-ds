@@ -1,6 +1,6 @@
 
 
-// const { ListNode } = require('../extensions/list-node.js');
+const { ListNode } = require('../extensions/list-node.js');
 
 /**
  * Implement the Queue with a given interface via linked list (use ListNode extension above).
@@ -14,21 +14,12 @@
  * queue.getUnderlyingList() // returns { value: 3, next: null }
  */
 
-function ListNode(x) {
-  this.value = x;
-  this.next = null;
-}
 
-module.exports = class Queue {
+module.exports =
+  class Queue {
   constructor() {
     this.head = null;
     this.tail = null;
-    this.length = 0;
-  }
-
-
-  get size() {
-    return this.length;
   }
 
   enqueue(element) {
@@ -36,40 +27,38 @@ module.exports = class Queue {
     if (this.head === null) {
       this.head = node;
       this.tail = node;
-      this.tail.next = null;
-      this.head.next = this.tail;
-      this.head.prev = null;
-      this.tail.prev = this.head;
     } else {
-      const tmp = this.head;
-      this.head = node;
-      tmp.prev = this.head;
-      this.head.next = tmp;
+      this.tail.next = node;
+      this.tail = node;
     }
-    this.length++;
   }
 
   dequeue() {
-    const { value } = this.tail;
-    this.tail = this.tail.prev;
-    this.tail.next = null;
-    this.length--;
-    if (this.size === 0) {
-      this.head = null;
-      this.tail = null;
+    const { value } = this.head
+    if (this.head === this.tail) {
+      this.tail = null
     }
-    return value;
+    this.head = this.head.next
+    return value
   }
 
   getUnderlyingList() {
-
+    return this.head
   }
 }
 
-
+//
 // const queue = new Queue();
 //
-// console.log(queue.enqueue(1)); // adds the element to the queue
-// console.log(queue.enqueue(3)); // adds the element to the queue
+// queue.enqueue(1); // adds the element to the queue
+// queue.enqueue(2); // adds the element to the queue
+// queue.enqueue(3); // adds the element to the queue
+// queue.enqueue(4); // adds the element to the queue
+// queue.enqueue(5); // adds the element to the queue
+// queue.enqueue(6); // adds the element to the queue
+// queue.enqueue(7); // adds the element to the queue
+// queue.enqueue(8); // adds the element to the queue
+// queue.enqueue(9); // adds the element to the queue
+//
 // console.log(queue.dequeue()); // returns the top element from queue and deletes it, returns 1
 // console.log(queue.getUnderlyingList()) // returns { value: 3, next: null }
